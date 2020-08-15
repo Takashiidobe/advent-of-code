@@ -1,3 +1,4 @@
+use std::cmp::max;
 use std::fs::read_to_string;
 
 fn read_input(file_name: &str) -> Vec<String> {
@@ -17,35 +18,38 @@ enum Command {
 fn main() {
     let input = read_input("../input.txt");
 
-    let mut grid: Vec<Vec<bool>> = Vec::new();
+    let mut grid: Vec<Vec<i32>> = Vec::new();
 
     for i in 0..1000 {
         grid.push(Vec::new());
         for j in 0..1000 {
-            grid[i].push(false);
+            grid[i].push(0);
         }
     }
 
-    fn toggle_lights(grid: &mut Vec<Vec<bool>>, command: Command, pos: Vec<usize>) {
+    fn toggle_lights(grid: &mut Vec<Vec<i32>>, command: Command, pos: Vec<usize>) {
         match command {
             Command::Toggle => {
                 for i in pos[0]..=pos[2] {
                     for j in pos[1]..=pos[3] {
-                        grid[i][j] = !grid[i][j];
+                        grid[i][j] += 2;
                     }
                 }
             }
             Command::TurnOn => {
                 for i in pos[0]..=pos[2] {
                     for j in pos[1]..=pos[3] {
-                        grid[i][j] = true;
+                        grid[i][j] += 1;
                     }
                 }
             }
             Command::TurnOff => {
                 for i in pos[0]..=pos[2] {
                     for j in pos[1]..=pos[3] {
-                        grid[i][j] = false;
+                        grid[i][j] -= 1;
+                        if grid[i][j] < 0 {
+                            grid[i][j] = 0;
+                        }
                     }
                 }
             }
@@ -90,11 +94,9 @@ fn main() {
 
     for i in 0..1000 {
         for j in 0..1000 {
-            if grid[i][j] == true {
-                count += 1;
-            }
+            count += grid[i][j];
         }
     }
+    assert_eq!(17836115, count);
     println!("{}", count);
-    assert_eq!(count, 569999);
 }
