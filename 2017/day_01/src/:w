@@ -1,0 +1,64 @@
+use std::fs::read_to_string;
+
+fn parse() -> String {
+    read_to_string("../input.txt").unwrap()
+}
+
+fn part_one() -> u32 {
+    let input = parse();
+    let input: Vec<u32> = input
+        .chars()
+        .filter(|c| c.is_ascii_digit())
+        .map(|d| d.to_digit(10).unwrap())
+        .collect();
+    let first = input[0];
+    let last = input[input.len() - 1];
+
+    let mut total = 0;
+
+    if first == last {
+        total += first;
+    }
+
+    let mut i = 0;
+    let mut j = 1;
+
+    while j < input.len() {
+        if input[i] == input[j] {
+            total += input[i];
+        }
+        i += 1;
+        j += 1;
+    }
+
+    total
+}
+
+fn part_two() -> usize {
+    let input = parse();
+    let v: Vec<usize> = input
+        .chars()
+        .filter(|c| c.is_ascii_digit())
+        .map(|d| d.to_digit(10).unwrap() as usize)
+        .collect();
+
+    let mid_index = (input.len() - 1) / 2 + 1;
+
+    let mut total = 0;
+    let mut i = 0;
+    let mut j = mid_index;
+
+    while i < mid_index {
+        if v[i] == v[j] {
+            total += i;
+        }
+        i += 1;
+        j += 1;
+    }
+    total
+}
+
+fn main() {
+    println!("part one: {}", part_one());
+    println!("Part two: {}", part_two());
+}
