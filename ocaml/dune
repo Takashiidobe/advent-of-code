@@ -1,0 +1,3 @@
+(executable
+ (name advent_of_code)
+ (libraries base stdio day01 utils))
