@@ -1,11 +1,6 @@
-use std::fs::read_to_string;
+fn get_input() -> Vec<usize> {
+    let s = include_str!("../input.txt").trim();
 
-fn get_input() -> String {
-    let s = read_to_string("../input.txt").unwrap();
-    s.trim().to_string()
-}
-
-fn input_to_vector(s: &str) -> Vec<usize> {
     s.split('\n')
         .collect::<Vec<&str>>()
         .iter()
@@ -13,9 +8,7 @@ fn input_to_vector(s: &str) -> Vec<usize> {
         .collect()
 }
 
-fn part_1() {
-    let s = get_input();
-    let v = input_to_vector(&s);
+fn part_1(v: &Vec<usize>) -> usize {
     let zipped = v.iter().zip(v.iter().skip(1));
     let mut count = 0;
     for (i, j) in zipped {
@@ -23,12 +16,10 @@ fn part_1() {
             count += 1;
         }
     }
-    println!("{}", count);
+    count
 }
 
-fn part_2() {
-    let s = get_input();
-    let v = input_to_vector(&s);
+fn part_2(v: &Vec<usize>) -> usize {
     let zipped = (0..v.len()).skip(2).zip((0..v.len()).skip(3));
     let mut count = 0;
     for (i, j) in zipped {
@@ -38,9 +29,33 @@ fn part_2() {
             count += 1;
         }
     }
-    println!("{}", count);
+    count
 }
 
 fn main() {
-    part_2();
+    let v = get_input();
+    println!("part 1: {}", part_1(&v));
+    println!("part 2: {}", part_2(&v));
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn test_1() {
+        let v1 = vec![100, 200, 300, 400, 500, 600];
+        assert_eq!(part_1(&v), 5);
+        assert_eq!(part_2(&v), 3);
+    }
+
+    #[test]
+    fn test_2() {
+        let v = vec![
+            159, 158, 174, 196, 197, 194, 209, 213, 214, 222, 223, 228, 229, 236, 237, 238, 241,
+            248, 255, 256,
+        ];
+        assert_eq!(part_1(&v), 17);
+        assert_eq!(part_2(&v), 17);
+    }
 }
