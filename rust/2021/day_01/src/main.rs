@@ -1,29 +1,16 @@
-fn get_input() -> Vec<usize> {
+fn get_input() -> Vec<u32> {
     let s = include_str!("../input.txt").trim();
 
-    s.split('\n')
-        .collect::<Vec<&str>>()
-        .iter()
-        .map(|x| x.parse::<usize>().unwrap())
-        .collect()
+    s.lines().map(|x| x.parse().unwrap()).collect()
 }
 
-fn part_1(v: &Vec<usize>) -> usize {
-    let zipped = v.iter().zip(v.iter().skip(1));
-    zipped.fold(0, |acc, x| if x.1 > x.0 { acc + 1 } else { acc })
+fn part_1(v: &Vec<u32>) -> usize {
+    v.windows(2).filter(|w| w[0] < w[1]).count()
 }
 
-fn part_2(v: &Vec<usize>) -> usize {
-    let zipped = (0..v.len()).skip(2).zip((0..v.len()).skip(3));
-    let mut count = 0;
-    for (i, j) in zipped {
-        let first = v[i] + v[i - 1] + v[i - 2];
-        let second = v[j] + v[j - 1] + v[j - 2];
-        if second > first {
-            count += 1;
-        }
-    }
-    count
+fn part_2(v: &Vec<u32>) -> usize {
+    let v: Vec<u32> = v.windows(3).map(|w| w.iter().sum()).collect();
+    v.windows(2).filter(|w| w[0] < w[1]).count()
 }
 
 fn main() {
