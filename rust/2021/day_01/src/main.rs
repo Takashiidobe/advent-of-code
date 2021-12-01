@@ -10,13 +10,7 @@ fn get_input() -> Vec<usize> {
 
 fn part_1(v: &Vec<usize>) -> usize {
     let zipped = v.iter().zip(v.iter().skip(1));
-    let mut count = 0;
-    for (i, j) in zipped {
-        if j > i {
-            count += 1;
-        }
-    }
-    count
+    zipped.fold(0, |acc, x| if x.1 > x.0 { acc + 1 } else { acc })
 }
 
 fn part_2(v: &Vec<usize>) -> usize {
@@ -45,17 +39,17 @@ mod test {
     #[test]
     fn test_1() {
         let v1 = vec![100, 200, 300, 400, 500, 600];
-        assert_eq!(part_1(&v), 5);
-        assert_eq!(part_2(&v), 3);
+        assert_eq!(part_1(&v1), 5);
+        assert_eq!(part_2(&v1), 3);
     }
 
     #[test]
     fn test_2() {
-        let v = vec![
+        let v2 = vec![
             159, 158, 174, 196, 197, 194, 209, 213, 214, 222, 223, 228, 229, 236, 237, 238, 241,
             248, 255, 256,
         ];
-        assert_eq!(part_1(&v), 17);
-        assert_eq!(part_2(&v), 17);
+        assert_eq!(part_1(&v2), 17);
+        assert_eq!(part_2(&v2), 17);
     }
 }
