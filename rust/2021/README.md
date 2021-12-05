@@ -2,4 +2,5 @@
 
 - [Day 1](./day_01/src/main.rs)
 - [Day 2](./day_02/src/main.rs)
-- [Day 3](./day_03/src/main.rs) (Part 2 TODO)
+- [Day 3](./day_03/src/main.rs)
+- [Day 4](./day_04/src/main.rs)
