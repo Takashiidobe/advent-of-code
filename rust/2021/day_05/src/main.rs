@@ -1,12 +1,13 @@
 use lazy_static::lazy_static;
 use regex::Regex;
 use std::cmp::{max, min};
+use std::collections::HashMap;
 
 lazy_static! {
     static ref RE: Regex = Regex::new(r"^([0-9]+),([0-9]+) -> ([0-9]+),([0-9]+)$").unwrap();
 }
 
-type Line = ((usize, usize), (usize, usize));
+type Line = ((i32, i32), (i32, i32));
 type Lines = Vec<Line>;
 
 fn get_input() -> &'static str {
@@ -39,14 +40,14 @@ fn part_1(lines: &Lines) -> usize {
             let min_y = min(y1, y2);
             let max_y = max(y1, y2);
             for y in *min_y..=*max_y {
-                board[y][*x1] += 1;
+                board[y as usize][*x1 as usize] += 1;
             }
         }
         if y1 == y2 {
             let min_x = min(x1, x2);
             let max_x = max(x1, x2);
             for x in *min_x..=*max_x {
-                board[*y1][x] += 1;
+                board[*y1 as usize][x as usize] += 1;
             }
         }
     }
@@ -59,52 +60,36 @@ fn part_1(lines: &Lines) -> usize {
     count
 }
 
-fn part_2(lines: &Lines) -> usize {
-    let mut board = vec![vec![0; 1000]; 1000];
+fn part_2(lines: Lines) -> usize {
+    let mut board = HashMap::new();
+
     for line in lines {
         let ((x1, y1), (x2, y2)) = line;
-        let min_x = min(x1, x2);
-        let max_x = max(x1, x2);
-        let min_y = min(y1, y2);
-        let max_y = max(y1, y2);
 
         if x1 == x2 {
-            for y in *min_y..=*max_y {
-                board[y][*x1] += 1;
+            for i in min(y1, y2)..=max(y1, y2) {
+                *board.entry((x1, i)).or_insert(0) += 1;
+            }
+        } else if y1 == y2 {
+            for i in min(x1, x2)..=max(x1, x2) {
+                *board.entry((i, y1)).or_insert(0) += 1;
+            }
+        } else {
+            let direction = if (x1 < x2) == (y1 < y2) { 1 } else { -1 };
+            for i in min(0, x2 - x1)..=max(0, x2 - x1) {
+                let new = (x1 + i, y1 + i * direction);
+                *board.entry(new).or_insert(0) += 1;
             }
         }
-        if y1 == y2 {
-            for x in *min_x..=*max_x {
-                board[*y1][x] += 1;
-            }
-        }
-        if max_y - min_y == max_x - min_x {
-            let dist = max_y - min_y;
-            for slope in 0..=dist {
-                board[min_y + slope][min_x + slope] += 1;
-            }
-        }
-        // if max_y == max_x && min_y == min_x {
-        //     for i in *min_x..=*max_x {
-        //         for j in *min_y..=*max_y {
-        //             board[j][i] += 1;
-        //         }
-        //     }
-        // }
     }
 
-    let mut count = 0;
-
-    for i in 0..board.len() {
-        count += board[i].iter().filter(|&&x| x > 1).count();
-    }
-    count
+    board.values().filter(|&v| *v >= 2).count()
 }
 
 fn main() {
-    let lines = parse_input(get_input());
-    // println!("part 1: {}", part_1(&lines));
-    println!("part 2: {}", part_2(&lines));
+    let input = parse_input(get_input());
+    println!("part 1: {}", part_1(&input));
+    println!("part 2: {}", part_2(input));
 }
 
 #[cfg(test)]
@@ -127,6 +112,6 @@ mod test {
 "#;
         let lines = parse_input(test_input);
         assert_eq!(part_1(&lines), 5);
-        assert_eq!(part_2(&lines), 12);
+        assert_eq!(part_2(lines), 12);
     }
 }
