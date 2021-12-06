@@ -30,7 +30,7 @@ fn part_1(fish: &mut VecDeque<usize>, days: u16) -> usize {
         fish.rotate_left(1);
     }
 
-    fish.iter().fold(0, |acc, x| x + acc)
+    fish.iter().sum()
 }
 
 fn part_2(fish: &mut VecDeque<usize>, days: u16) -> usize {
