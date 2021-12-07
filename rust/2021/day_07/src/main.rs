@@ -25,9 +25,8 @@ fn parse_input(file: &str) -> Vec<usize> {
 
 fn part_1(crabs: &mut Vec<usize>) -> usize {
     let mut min_fuel = usize::MAX;
-    let crab_len = crabs.len();
 
-    for i in 0..crab_len {
+    for i in 0..crabs.len() {
         let mut fuel_cost = 0;
         for (index, crab) in crabs.iter().enumerate() {
             if *crab > 0 {
@@ -46,9 +45,8 @@ fn dist_to_fuel(dist: usize) -> usize {
 
 fn part_2(crabs: &mut Vec<usize>) -> usize {
     let mut min_fuel = usize::MAX;
-    let crab_len = crabs.len();
 
-    for i in 0..crab_len {
+    for i in 0..crabs.len() {
         let mut fuel_cost = 0;
         for (index, crab) in crabs.iter().enumerate() {
             if *crab > 0 {
