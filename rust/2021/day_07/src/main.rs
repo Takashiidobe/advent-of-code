@@ -23,7 +23,7 @@ fn parse_input(file: &str) -> Vec<usize> {
     v
 }
 
-fn part_1(crabs: &mut Vec<usize>) -> usize {
+fn part_1(crabs: &Vec<usize>) -> usize {
     let mut min_fuel = usize::MAX;
 
     for i in 0..crabs.len() {
@@ -43,7 +43,7 @@ fn dist_to_fuel(dist: usize) -> usize {
     (1..=dist).fold(0, |acc, x| acc + x)
 }
 
-fn part_2(crabs: &mut Vec<usize>) -> usize {
+fn part_2(crabs: &Vec<usize>) -> usize {
     let mut min_fuel = usize::MAX;
 
     for i in 0..crabs.len() {
@@ -61,8 +61,8 @@ fn part_2(crabs: &mut Vec<usize>) -> usize {
 
 fn main() {
     let input = parse_input(get_input());
-    println!("part 1: {}", part_1(&mut input.clone()));
-    println!("part 2: {}", part_2(&mut input.clone()));
+    println!("part 1: {}", part_1(&input));
+    println!("part 2: {}", part_2(&input));
 }
 
 #[cfg(test)]
@@ -74,8 +74,8 @@ mod test {
         let test_input = r#"16,1,2,0,4,2,7,1,2,14
 "#;
         let input = parse_input(test_input);
-        assert_eq!(part_1(&mut input.clone()), 37);
-        assert_eq!(part_2(&mut input.clone()), 168);
+        assert_eq!(part_1(&input), 37);
+        assert_eq!(part_2(&input), 168);
     }
 
     #[test]
