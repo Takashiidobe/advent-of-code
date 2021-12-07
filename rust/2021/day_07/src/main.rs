@@ -41,11 +41,7 @@ fn part_1(crabs: &mut Vec<usize>) -> usize {
 }
 
 fn dist_to_fuel(dist: usize) -> usize {
-    let mut fuel = 0;
-    for i in 1..=dist {
-        fuel += i;
-    }
-    fuel
+    (1..=dist).fold(0, |acc, x| acc + x)
 }
 
 fn part_2(crabs: &mut Vec<usize>) -> usize {
@@ -81,7 +77,7 @@ mod test {
 "#;
         let input = parse_input(test_input);
         assert_eq!(part_1(&mut input.clone()), 37);
-        assert_eq!(part_1(&mut input.clone()), 168);
+        assert_eq!(part_2(&mut input.clone()), 168);
     }
 
     #[test]
