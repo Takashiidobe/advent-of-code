@@ -7,3 +7,5 @@
 - [Day 5](./day_05/src/main.rs)
 - [Day 6](./day_06/src/main.rs)
 - [Day 7](./day_07/src/main.rs)
+- [Day 8](./day_08/src/main.rs)
+- [Day 9](./day_09/src/main.rs)
