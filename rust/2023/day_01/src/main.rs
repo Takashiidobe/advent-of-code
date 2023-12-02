@@ -19,14 +19,14 @@ fn to_slice(input: &str) -> Vec<char> {
     input.chars().collect::<Vec<_>>()
 }
 
-fn spelled_digit(input: &[char]) -> Option<(u32, usize)> {
+fn spelled_digit(input: &[char]) -> Option<u32> {
     let spelled_digits = &[
         "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
     ];
 
     for (i, digit) in spelled_digits.iter().enumerate() {
         if input.len() >= digit.len() && input[0..digit.len()] == to_slice(digit) {
-            return Some((i as u32 + 1, digit.len() - 1));
+            return Some(i as u32 + 1);
         }
     }
 
@@ -38,21 +38,12 @@ fn calibrate_part_2(input: &str) -> u32 {
     for line in input.lines() {
         let mut digits = vec![];
         let characters: Vec<_> = line.chars().collect();
-        let mut i = 0;
-        while i < characters.len() {
-            let c = characters[i];
+        for (i, c) in characters.iter().enumerate() {
             if c.is_ascii_digit() {
                 digits.push(c.to_digit(10).unwrap());
-                i += 1;
-                continue;
-            }
-
-            if let Some((num, offset)) = spelled_digit(&characters[i..]) {
+            } else if let Some(num) = spelled_digit(&characters[i..]) {
                 digits.push(num);
-                i += offset;
-                continue;
             }
-            i += 1;
         }
 
         let first_digit = digits.first().unwrap();
