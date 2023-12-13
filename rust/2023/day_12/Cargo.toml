@@ -6,7 +6,6 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-cache-macro = "0.4.1"
-cached = "0.46.1"
+cache-macro = { git = "https://github.com/takashiidobe/cache-macro" }
 lazy_static = "1.4.0"
 lru-cache = "0.1.2"
