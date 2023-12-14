@@ -21,8 +21,7 @@ fn parse(input: &str) -> (Vec<u64>, Vec<Vec<Vec<u64>>>) {
     )
 }
 
-#[aoc(day5, part1)]
-fn part1(input: &str) -> u64 {
+fn part_1(input: &str) -> u64 {
     let (seeds, maps) = parse(input);
     seeds
         .into_iter()
@@ -40,8 +39,7 @@ fn part1(input: &str) -> u64 {
         .unwrap()
 }
 
-#[aoc(day5, part2)]
-fn part2(input: &str) -> u64 {
+fn part_2(input: &str) -> u64 {
     let (seeds, mut maps) = parse(input);
     for section in &mut maps {
         section.sort_unstable_by_key(|i| i[1]);
@@ -95,4 +93,9 @@ fn apply_sections(interval: (u64, u64), sections: &[Vec<Vec<u64>>]) -> Vec<(u64,
             .flat_map(|i| apply_sections(i, &sections[1..]))
             .collect()
     }
+}
+
+fn main() {
+    let input = include_str!("../input.txt");
+    println!("part 1: {}, part 2: {}", part_1(input), part_2(input));
 }
