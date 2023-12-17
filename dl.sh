@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-
-for year in $(seq 2015 2021); do
+for year in $(seq 2015 2023); do
   url="https://adventofcode.com"
   url_day="${url}/$year/day"
   mkdir -p aoc
@@ -31,4 +30,6 @@ for year in $(seq 2015 2021); do
       -H 'Cache-Control: no-cache' \
       "${url_day}/${i}/input" > ${i}/input
   done
+
+  cd ~/advent-of-code
 done
