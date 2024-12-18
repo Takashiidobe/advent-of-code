@@ -1,14 +1,16 @@
+#[allow(dead_code)]
+const EXAMPLE: &str = include_str!("example.txt");
 const INPUT: &str = include_str!("input.txt");
 
-fn parse(input: &str) -> ! {
+fn parse(input: &str) -> Vec<&str> {
     todo!()
 }
 
-fn part_1(input: &str) {
+fn part_1(input: &str) -> i64 {
     todo!()
 }
 
-fn part_2(input: &str) {
+fn part_2(input: &str) -> i64 {
     todo!()
 }
 
@@ -20,20 +22,19 @@ fn main() {
 #[cfg(test)]
 mod tests {
     use super::*;
-    const EXAMPLE_INPUT: &str = include_str!("example.txt");
 
     #[test]
     fn parse_test() {
-        assert_eq!(parse(EXAMPLE_INPUT), todo!());
+        assert_eq!(parse(EXAMPLE), vec!["input"]);
     }
 
     #[test]
     fn test_part_1() {
-        assert_eq!(part_1(EXAMPLE_INPUT), todo!());
+        assert_eq!(part_1(EXAMPLE), 0);
     }
 
     #[test]
     fn test_part_2() {
-        assert_eq!(part_2(EXAMPLE_INPUT), todo!());
+        assert_eq!(part_2(EXAMPLE), 0);
     }
 }
