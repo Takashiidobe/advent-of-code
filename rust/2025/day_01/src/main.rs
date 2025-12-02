@@ -49,17 +49,18 @@ fn part_2(input: &str) -> i64 {
             Dir::Left(n) | Dir::Right(n) => n,
         };
 
-        for _ in 0..magnitude {
-            if matches!(dir, Dir::Left(_)) {
-                curr -= 1;
-            } else {
-                curr += 1;
-            }
-            curr = ((curr % 100) + 100) % 100;
-            if curr == 0 {
-                count += 1;
-            }
+        let times = (magnitude / 100) + 1;
+        let remainder = ((magnitude % 100) + 100) % 100;
+
+        if matches!(dir, Dir::Left(_)) {
+            curr -= remainder;
+        } else {
+            curr += remainder;
         }
+        if curr == 0 || curr == 100 {
+            count += times;
+        }
+        curr = ((curr % 100) + 100) % 100;
     }
     count
 }
